@@ -3,14 +3,28 @@ require 'nokogiri'
 require 'net/http'
 require 'json'
 
+# The main onboarding driver
+#
+# This class is a simple response validator to determine whether response is valid json, xml, or html
+#
 class Onboarding
     attr_accessor :url
 
-    # Create the object
+    # Create the object with default url to localhost
+    #
+    # Arguments: 
+    #   url: (String)
+    # 
     def initialize(url = 'localhost')
         @url = url
     end
 
+    # Access the url
+    #
+    # Example:
+    #   >> Onboarding.access
+    #   => {}
+    # 
     def access
         # Cast to uri
         uri = URI(@url)
@@ -31,6 +45,15 @@ class Onboarding
         return content
     end
 
+    # Check whether the string is valid json
+    #
+    # Example:
+    #   >> Onboarding.is_valid_json({})
+    #   => true
+    #
+    # Arguments:
+    #   json: (String)
+    #
     def is_valid_json(json)
         JSON.parse(json)
         return true
@@ -38,13 +61,30 @@ class Onboarding
         return false
     end
 
+    # Check whether the string is valid xml
+    #
+    # Example:
+    #   >> Onboarding.is_valid_xml({})
+    #   => false
+    #
+    # Arguments:
+    #   xml: (String)
+    #
     def is_valid_xml(xml)
         return Nokogiri::XML(xml).errors.empty?
     end
 
+    # Check whether the string is valid html
+    #
+    # Example:
+    #   >> Onboarding.is_valid_json(<html></html>)
+    #   => true
+    #
+    # Arguments:
+    #   html: (String)
+    #
     def is_valid_html(html)
         if html.include? "</html>"
-            # return Nokogiri::HTML(html).errors.empty?
             return !is_valid_json(html) && !is_valid_xml(html)
         else
             return false    
