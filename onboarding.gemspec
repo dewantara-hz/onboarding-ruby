@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
     s.files       = ["lib/onboarding.rb"]
     s.license       = 'MIT'
 
-    s.add_development_dependency "nokogiri", "~> 1.8"
-    s.add_development_dependency "net", "~> 0.3.3"
-    s.add_development_dependency "json", "~> 2.1"
+    s.add_dependency "nokogiri", "~> 1.8"
+    s.add_dependency "net", "~> 0.3.3"
+    s.add_dependency "json", "~> 2.1"
     
   end
